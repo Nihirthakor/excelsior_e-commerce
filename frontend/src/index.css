@@ -1,0 +1,6 @@
+@import "@fontsource/libre-baskerville";
+@import "tailwindcss";
+
+:root {
+  --font-family-second: "Poppins", sans-serif;
+}
