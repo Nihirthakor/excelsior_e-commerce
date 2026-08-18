@@ -4,7 +4,7 @@ const fs = require("fs");
 
 const uploadPath = path.join(
   __dirname,
-  "../uploads/products"
+  "../uploads/categories"
 );
 
 if (!fs.existsSync(uploadPath)) {

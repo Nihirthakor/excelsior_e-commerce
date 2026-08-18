@@ -192,6 +192,40 @@ const Admins = () => {
     }
   };
 
+  const deleteProduct = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.delete(
+        `http://localhost:4000/api/product/deleteProduct/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      getProducts();
+
+      alert("product deleted successfully");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteCategory = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.delete(`http://localhost:4000/api/category/delete/${id}`, {
+        headers: {
+          Authorization: `Bearer: ${token}`,
+        },
+      });
+      getCategories();
+      alert("category delete successfully");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 md:flex ">
       <aside className="w-full bg-gray-900 p-4 text-white md:min-h-screen md:w-64 md:p-5">
@@ -482,11 +516,25 @@ const Admins = () => {
                     </ul>
 
                     <Link
-                      to="/Category"
+                      to="/Admin/Category"
                       className="mt-4 block w-full rounded-lg capitalize bg-green-600 py-2 text-center text-white hover:bg-green-700"
                     >
-                      buy product
+                      create a product
                     </Link>
+
+                    <button
+                      onClick={() => deleteProduct(item.id)}
+                      className="mt-4 block w-full rounded-lg capitalize bg-red-600 py-2 text-center text-white hover:bg-red-700"
+                    >
+                      delete product
+                    </button>
+                    <Link
+                    to={`/admin/updateProduct/${item.id}`}
+                    onClick={() => updateCategory(item.id)}
+                    className="mt-4 block w-full rounded-lg capitalize bg-blue-600 py-2 text-center text-white hover:bg-blue-700"
+                  >
+                    update category
+                  </Link>
                   </div>
                 </div>
               ))}
@@ -521,6 +569,20 @@ const Admins = () => {
                     className="mt-4 block w-full rounded-lg capitalize bg-green-600 py-2 text-center text-white hover:bg-green-700"
                   >
                     create a product
+                  </Link>
+                  <button
+                    onClick={() => deleteCategory(category.id)}
+                    className="mt-4 block w-full rounded-lg capitalize bg-red-600 py-2 text-center text-white hover:bg-red-700"
+                  >
+                    delete category
+                  </button>
+
+                  <Link
+                    to={`/admin/updateCategory/${category.id}`}
+                    onClick={() => updateCategory(category.id)}
+                    className="mt-4 block w-full rounded-lg capitalize bg-blue-600 py-2 text-center text-white hover:bg-blue-700"
+                  >
+                    update category
                   </Link>
                 </div>
               </div>

@@ -12,6 +12,8 @@ import Contact from "./pages/Contact.jsx";
 import CategoryAdmin from "./admin/Category.jsx";
 import Product from "./pages/Product.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import UpdateCategory from "./admin/UpdateCategory.jsx";
+import UpdateProduct from "./admin/UpdateProduct.jsx";
 
 function App() {
   return (
@@ -43,7 +45,25 @@ function App() {
             path="/Admin/Category"
             element={
               <ProtectedRoute allowedRoles={["ADMIN"]}>
-                <Category />
+                <CategoryAdmin />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/updateCategory/:id"
+            element={
+              <ProtectedRoute allowedRoles={["ADMIN"]}>
+                <UpdateCategory />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/updateCategory/:id"
+            element={
+              <ProtectedRoute allowedRoles={["ADMIN"]}>
+                <UpdateProduct />
               </ProtectedRoute>
             }
           />

@@ -28,22 +28,31 @@ const createCategory = async (req, res) => {
 const updateCategory = async (req, res) => {
   try {
     const { name, slug } = req.body;
-    const image = req.file ? `/uploads/categories/${req.file.filename}` : null;
 
-    const update = await categoryService.updateProduc(req.params.id, {
-      name,
-      slug,
-      image,
-    });
+    const image = req.file
+      ? `/uploads/categories/${req.file.filename}`
+      : undefined;
 
-    res.status(200).json({
-      message: "product category updated successfuly",
+    const updatedCategory = await categoryService.updateProduc(
+      req.params.id,
+      {
+        name,
+        slug,
+        image,
+      }
+    );
+
+    return res.status(200).json({
+      message: "Product category updated successfully",
       success: true,
-      data: update,
+      data: updatedCategory,
     });
   } catch (error) {
-    res.status(400).json({
+    console.log("Update category error:", error);
+
+    return res.status(400).json({
       message: error.message,
+      success: false,
     });
   }
 };
