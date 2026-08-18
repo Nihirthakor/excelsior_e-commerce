@@ -530,10 +530,9 @@ const Admins = () => {
                     </button>
                     <Link
                     to={`/admin/updateProduct/${item.id}`}
-                    onClick={() => updateCategory(item.id)}
                     className="mt-4 block w-full rounded-lg capitalize bg-blue-600 py-2 text-center text-white hover:bg-blue-700"
                   >
-                    update category
+                    update prouct
                   </Link>
                   </div>
                 </div>
@@ -579,7 +578,6 @@ const Admins = () => {
 
                   <Link
                     to={`/admin/updateCategory/${category.id}`}
-                    onClick={() => updateCategory(category.id)}
                     className="mt-4 block w-full rounded-lg capitalize bg-blue-600 py-2 text-center text-white hover:bg-blue-700"
                   >
                     update category

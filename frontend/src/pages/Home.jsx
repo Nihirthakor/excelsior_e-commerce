@@ -281,51 +281,82 @@ const Home = () => {
           <h1>top rating</h1>
           <h1>best selling</h1>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {product.map((item) => (
-            <div
-              key={item.id}
-              className="bg-white  rounded-xl shadow-lg overflow-hidden hover:shadow-xl  transition-all duration-300"
-            >
-              <div className="flex justify-center items-center overflow-hidden">
-                <img
-                  src={`http://localhost:4000${item.image}`}
-                  alt={item.name}
-                  className="w-96 h-56 object-center hover:scale-115 "
-                />
-              </div>
+        <div className="w-full">
+          <Swiper
+            spaceBetween={30}
+            pagination={{
+              clickable: true,
+              type: "progressbar",
+            }}
+            navigation={true}
+            modules={[Pagination, Navigation]}
+            className="mySwiper"
+            breakpoints={{
+              0: {
+                slidesPerView: 1,
+                spaceBetween: 10,
+              },
+              480: {
+                slidesPerView: 2,
+                spaceBetween: 15,
+              },
+              768: {
+                slidesPerView: 3,
+                spaceBetween: 20,
+              },
+              1024: {
+                slidesPerView: 4,
+                spaceBetween: 30,
+              },
+            }}
+          >
+            {product.map((item) => (
+              <SwiperSlide key={item.id}>
+                <div className="overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:shadow-xl">
+                  <div className="flex items-center justify-center overflow-hidden">
+                    <img
+                      src={`http://localhost:4000${item.image}`}
+                      alt={item.name}
+                      className="h-56 w-full object-cover transition-transform duration-300 hover:scale-110"
+                    />
+                  </div>
 
-              <div className="p-4">
-                <h2 className="text-xl font-bold capitalize">{item.name}</h2>
+                  <div className="p-4">
+                    <h2 className="text-xl font-bold capitalize">
+                      {item.name}
+                    </h2>
 
-                <p className="text-gray-500 mt-1">{item.slug}</p>
+                    <p className="mt-1 text-gray-500">{item.slug}</p>
 
-                <ul className="flex text-orange-400">
-                  <li>
-                    <FaStar />
-                  </li>
-                  <li>
-                    <FaStar />
-                  </li>
-                  <li>
-                    <FaStar />
-                  </li>
-                  <li>
-                    <FaStar />
-                  </li>
-                  <li>
-                    <CiStar />
-                  </li>
-                </ul>
+                    <ul className="flex text-orange-400">
+                      <li>
+                        <FaStar />
+                      </li>
+                      <li>
+                        <FaStar />
+                      </li>
+                      <li>
+                        <FaStar />
+                      </li>
+                      <li>
+                        <FaStar />
+                      </li>
+                      <li>
+                        <CiStar />
+                      </li>
+                    </ul>
 
-                <h2 className="mt-4 w-full text-center bg-green-600 text-white py-2 rounded-lg hover:bg-green-700">
-                  <Link to="/Category" className="">
-                    view category
-                  </Link>
-                </h2>
-              </div>
-            </div>
-          ))}
+                    <Link
+                      to="/Category"
+                      className="mt-4 block w-full rounded-lg bg-green-600 py-2 text-center text-white hover:bg-green-700"
+                    >
+                      View Category
+                    </Link>
+                  </div>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
       </section>
 

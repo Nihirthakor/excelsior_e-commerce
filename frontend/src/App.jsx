@@ -60,7 +60,7 @@ function App() {
           />
 
           <Route
-            path="/admin/updateCategory/:id"
+            path="/admin/UpdateProduct/:id"
             element={
               <ProtectedRoute allowedRoles={["ADMIN"]}>
                 <UpdateProduct />
