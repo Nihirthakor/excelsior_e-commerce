@@ -11,6 +11,7 @@ const Admins = () => {
   const [users, setUsers] = useState([]);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [imageCategory, setImageCategory] = useState(null);
 
   const [form, setForm] = useState({
     name: "",
@@ -33,6 +34,12 @@ const Admins = () => {
     "All Products",
     "All Categories",
   ];
+
+  const [categoryForm, setCategoryForm] = useState({
+    name: "",
+    slug: "",
+    image: null,
+  });
 
   useEffect(() => {
     getUsers();
@@ -192,6 +199,15 @@ const Admins = () => {
     }
   };
 
+  const handleChangeCategory = (e) => {
+    const { name, value, files } = e.target;
+
+    setCategoryForm({
+      ...categoryForm,
+      [name]: files ? files[0] : value,
+    });
+  };
+
   const deleteProduct = async (id) => {
     try {
       const token = localStorage.getItem("token");
@@ -206,6 +222,33 @@ const Admins = () => {
       getProducts();
 
       alert("product deleted successfully");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const createCategory = async (e) => {
+    e.preventDefault();
+    try {
+      const formDataCategory = new FormData();
+
+      formDataCategory.append("name", categoryForm.name);
+      formDataCategory.append("slug", categoryForm.slug);
+      formDataCategory.append("image", categoryForm.image);
+
+      const res = await axios.post(
+        `http://localhost:4000/api/category/craete`,
+        formDataCategory,
+      );
+
+      console.log(res.data);
+      alert("category craeted successfully");
+
+      setCategoryForm({
+        name: "",
+        slug: "",
+        image: null,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -529,11 +572,11 @@ const Admins = () => {
                       delete product
                     </button>
                     <Link
-                    to={`/admin/updateProduct/${item.id}`}
-                    className="mt-4 block w-full rounded-lg capitalize bg-blue-600 py-2 text-center text-white hover:bg-blue-700"
-                  >
-                    update prouct
-                  </Link>
+                      to={`/admin/updateProduct/${item.id}`}
+                      className="mt-4 block w-full rounded-lg capitalize bg-blue-600 py-2 text-center text-white hover:bg-blue-700"
+                    >
+                      update prouct
+                    </Link>
                   </div>
                 </div>
               ))}
@@ -543,49 +586,91 @@ const Admins = () => {
 
         {/* ALL CATEGORIES */}
         {activeMenu === "All Categories" && (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {categories.map((category) => (
-              <div
-                key={category.id}
-                className="overflow-hidden rounded-lg bg-white shadow"
+          <section>
+            <div>
+              <form
+                onSubmit={createCategory}
+                className="mb-8 rounded-lg bg-white p-4 shadow sm:p-6"
               >
-                {category.image && (
-                  <img
-                    src={`http://localhost:4000${category.image}`}
-                    alt={category.name}
-                    className="h-48 w-full object-cover"
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                  <input
+                    type="text"
+                    name="name"
+                    value={categoryForm.name}
+                    placeholder="enter a name"
+                    onChange={handleChangeCategory}
+                    className="w-full rounded border p-3"
                   />
-                )}
-
-                <div className="p-5">
-                  <h2 className="text-xl font-semibold">{category.name}</h2>
-
-                  {category.slug && (
-                    <p className="mt-2 text-gray-500">{category.slug}</p>
-                  )}
-                  <Link
-                    to="/Admin/Category"
-                    className="mt-4 block w-full rounded-lg capitalize bg-green-600 py-2 text-center text-white hover:bg-green-700"
-                  >
-                    create a product
-                  </Link>
-                  <button
-                    onClick={() => deleteCategory(category.id)}
-                    className="mt-4 block w-full rounded-lg capitalize bg-red-600 py-2 text-center text-white hover:bg-red-700"
-                  >
-                    delete category
-                  </button>
-
-                  <Link
-                    to={`/admin/updateCategory/${category.id}`}
-                    className="mt-4 block w-full rounded-lg capitalize bg-blue-600 py-2 text-center text-white hover:bg-blue-700"
-                  >
-                    update category
-                  </Link>
+                  <input
+                    type="text"
+                    name="slug"
+                    value={categoryForm.slug}
+                    placeholder="enter a name"
+                    onChange={handleChangeCategory}
+                    className="w-full rounded border p-3"
+                  />
+                  <input
+                    type="file"
+                    name="image"
+                    accept="image/*"
+                    onChange={handleChangeCategory}
+                    className="w-full rounded border p-3 md:col-span-2"
+                    required
+                  />
                 </div>
-              </div>
-            ))}
-          </div>
+                <button
+                  type="submit"
+                  className="mt-5 w-full rounded bg-black px-6 py-3 text-white sm:w-auto"
+                >
+                  Create category
+                </button>
+              </form>
+            </div>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+              {categories.map((category) => (
+                <div
+                  key={category.id}
+                  className="overflow-hidden rounded-lg bg-white shadow"
+                >
+                  {category.image && (
+                    <img
+                      src={`http://localhost:4000${category.image}`}
+                      alt={category.name}
+                      className="h-48 w-full object-cover"
+                    />
+                  )}
+
+
+                  <div className="p-5">
+                    <h2 className="text-xl font-semibold">{category.name}</h2>
+
+                    {category.slug && (
+                      <p className="mt-2 text-gray-500">{category.slug}</p>
+                    )}
+                    <Link
+                      to="/Admin/Category"
+                      className="mt-4 block w-full rounded-lg capitalize bg-green-600 py-2 text-center text-white hover:bg-green-700"
+                    >
+                      create a product
+                    </Link>
+                    <button
+                      onClick={() => deleteCategory(category.id)}
+                      className="mt-4 block w-full rounded-lg capitalize bg-red-600 py-2 text-center text-white hover:bg-red-700"
+                    >
+                      delete category
+                    </button>
+
+                    <Link
+                      to={`/admin/updateCategory/${category.id}`}
+                      className="mt-4 block w-full rounded-lg capitalize bg-blue-600 py-2 text-center text-white hover:bg-blue-700"
+                    >
+                      update category
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
         )}
       </main>
     </div>
