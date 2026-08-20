@@ -16,8 +16,8 @@ const {
 router.post(
   "/",
   authMiddleware,
-//   ...createOrderValidation,
-//   validate,
+  //   ...createOrderValidation,
+  //   validate,
   orderController.createOrder,
 );
 
@@ -25,7 +25,9 @@ router.post(
 router.get("/my-orders", authMiddleware, orderController.getMyOrders);
 
 // ADMIN routes — put before "/:id"
-router.get("/admin/all", authMiddleware, orderController.getAllOrders);
+router.get("/admin/all", 
+  authMiddleware, 
+  orderController.getAllOrders);
 
 router.patch(
   "/admin/:id/status",

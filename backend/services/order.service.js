@@ -146,7 +146,7 @@ const getOrderById = async (orderId, userId, role) => {
 };
 
 const getAllOrders = async () => {
-  return await prisma.order.findMany({
+  const order = await prisma.order.findMany({
     include: {
       user: {
         select: {
@@ -167,6 +167,11 @@ const getAllOrders = async () => {
       createdAt: "desc",
     },
   });
+  const totalOrder = await prisma.order.count();
+  return {
+    order,
+    totalOrder,
+  };
 };
 
 const updateOrderStatus = async (orderId, status) => {

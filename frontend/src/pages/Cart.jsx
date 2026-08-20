@@ -50,6 +50,7 @@ const Cart = () => {
   // Place Order
   const placeOrder = async () => {
     try {
+      const token = localStorage.getItem("token");
       const orderData = {
         items: cart.map((item) => ({
           productId: item.id,
@@ -60,8 +61,13 @@ const Cart = () => {
       console.log("Sending order:", orderData);
 
       const response = await axios.post(
-        "http://localhost:4000/api/order/createOrder",
+        "http://localhost:4000/api/orders",
         orderData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
       );
 
       console.log(response.data);
@@ -71,11 +77,8 @@ const Cart = () => {
       // Clear cart after successful order
       localStorage.removeItem("cart");
       setCart([]);
-
     } catch (error) {
-      console.log(
-        error.response?.data || error.message,
-      );
+      console.log(error.response?.data || error.message);
 
       alert("Failed to place order");
     }
@@ -90,18 +93,14 @@ const Cart = () => {
   if (cart.length === 0) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <h1 className="text-2xl font-bold">
-          Your Cart is Empty
-        </h1>
+        <h1 className="text-2xl font-bold">Your Cart is Empty</h1>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-gray-50 px-10 py-10">
-      <h1 className="mb-8 text-3xl font-bold">
-        Shopping Cart
-      </h1>
+      <h1 className="mb-8 text-3xl font-bold">Shopping Cart</h1>
 
       <div className="space-y-4">
         {cart.map((item) => (
@@ -110,13 +109,9 @@ const Cart = () => {
             className="flex items-center justify-between rounded-lg bg-white p-5 shadow"
           >
             <div>
-              <h2 className="text-xl font-semibold">
-                {item.name}
-              </h2>
+              <h2 className="text-xl font-semibold">{item.name}</h2>
 
-              <p className="text-gray-600">
-                ₹{item.price}
-              </p>
+              <p className="text-gray-600">₹{item.price}</p>
             </div>
 
             <div className="flex items-center gap-3">
@@ -127,9 +122,7 @@ const Cart = () => {
                 -
               </button>
 
-              <span className="font-bold">
-                {item.quantity}
-              </span>
+              <span className="font-bold">{item.quantity}</span>
 
               <button
                 onClick={() => increaseQuantity(item.id)}
@@ -139,9 +132,7 @@ const Cart = () => {
               </button>
             </div>
 
-            <div className="font-bold">
-              ₹{item.price * item.quantity}
-            </div>
+            <div className="font-bold">₹{item.price * item.quantity}</div>
 
             <button
               onClick={() => removeProduct(item.id)}
@@ -154,9 +145,7 @@ const Cart = () => {
       </div>
 
       <div className="mt-8 rounded-lg bg-white p-6 shadow">
-        <h2 className="text-2xl font-bold">
-          Total: ₹{total}
-        </h2>
+        <h2 className="text-2xl font-bold">Total: ₹{total}</h2>
 
         <button
           onClick={placeOrder}

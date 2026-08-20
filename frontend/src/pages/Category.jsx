@@ -21,7 +21,6 @@ const Category = () => {
     }
   };
 
-
   const addToCart = (item) => {
     const oldCart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -49,7 +48,7 @@ const Category = () => {
     }
 
     localStorage.setItem("cart", JSON.stringify(updatedCart));
-
+    window.dispatchEvent(new Event("cartUpdated"));
     alert("Product added to cart");
   };
 

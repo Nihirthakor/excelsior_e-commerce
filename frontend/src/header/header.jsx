@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import logoHeader from "../image/logoMain.avif";
@@ -17,8 +17,61 @@ import headerImg6 from "../image/headerImg6.webp";
 
 import headerImg11 from "../image/headerImg11.webp";
 import headerImg12 from "../image/headerImg12.webp";
+import axios from "axios";
 
 const Header = () => {
+  const [cartCount, setCartCount] = useState(0);
+
+  useEffect(() => {
+    const updateCartCount = () => {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      const totalQuantity = cart.reduce(
+        (total, item) => total + item.quantity,
+        0,
+      );
+
+      setCartCount(totalQuantity);
+    };
+
+    // Get count when page loads
+    updateCartCount();
+
+    // Get count immediately when Add to Cart is clicked
+    window.addEventListener("cartUpdated", updateCartCount);
+
+    return () => {
+      window.removeEventListener("cartUpdated", updateCartCount);
+    };
+  }, []);
+
+  const [order, setOrder] = useState([]);
+
+  useEffect(() => {
+    getOrder();
+  }, []);
+
+  const getOrder = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const res = await axios.get(
+        "http://localhost:4000/api/orders/admin/all",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      console.log(res.data);
+
+      setOrder(res.data.data.order);
+    } catch (error) {
+      console.log(error.response?.data || error.message);
+    }
+  };
+
   const [mobileMenu, setMobileMenu] = useState(false);
 
   return (
@@ -429,7 +482,7 @@ const Header = () => {
                   <CiHeart />
 
                   <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-green-900 text-[9px] text-white">
-                    0
+                    {cartCount}
                   </span>
                 </Link>
               </button>
