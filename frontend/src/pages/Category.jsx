@@ -67,7 +67,7 @@ const Category = () => {
               <img
                 src={`http://localhost:4000${item.category.image}`}
                 alt={item.name}
-                className="h-64 w-full object-cover"
+                className="h-64 w-full object-fill"
               />
             </div>
 

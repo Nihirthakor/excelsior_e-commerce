@@ -14,6 +14,7 @@ import Product from "./pages/Product.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import UpdateCategory from "./admin/UpdateCategory.jsx";
 import UpdateProduct from "./admin/UpdateProduct.jsx";
+import Cart from "./pages/Cart.jsx";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
 
           {/* Normal User Category */}
           <Route path="/Category" element={<Category />} />
+          <Route path="/Cart" element={<Cart />} />
 
           {/* Admin Category */}
           <Route

@@ -425,11 +425,13 @@ const Header = () => {
               </Link>
 
               <button className="relative">
-                <CiHeart />
+                <Link to="/cart">
+                  <CiHeart />
 
-                <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-green-900 text-[9px] text-white">
-                  0
-                </span>
+                  <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-green-900 text-[9px] text-white">
+                    0
+                  </span>
+                </Link>
               </button>
 
               <Link to="/category" className="relative">
