@@ -26,6 +26,8 @@ const createOrder = async (req, res) => {
 // GET MY ORDERS
 const getMyOrders = async (req, res) => {
   try {
+    console.log("REQ USER:", req.user);
+    console.log("USER ID:", req.user.id);
     const orders = await orderService.getMyOrders(req.user.id);
 
     res.status(200).json({
