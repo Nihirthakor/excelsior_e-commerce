@@ -15,6 +15,8 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import UpdateCategory from "./admin/UpdateCategory.jsx";
 import UpdateProduct from "./admin/UpdateProduct.jsx";
 import Cart from "./pages/Cart.jsx";
+import Orders from "./pages/Orders.jsx";
+import AllOrders from "./admin/AllOrders.jsx";
 
 function App() {
   return (
@@ -37,6 +39,7 @@ function App() {
           />
 
           <Route path="/AdminDash" element={<AdminDash />} />
+          <Route path="/Orders" element={<Orders />} />
 
           {/* Normal User Category */}
           <Route path="/Category" element={<Category />} />
@@ -52,6 +55,14 @@ function App() {
             }
           />
 
+          <Route
+            path="/Admin/AllOrders"
+            element={
+              <ProtectedRoute allowedRoles={["ADMIN"]}>
+                <AllOrders />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/admin/updateCategory/:id"
             element={

@@ -487,7 +487,7 @@ const Header = () => {
                 </Link>
               </button>
 
-              <Link to="/category" className="relative">
+              <Link to="/orders" className="relative">
                 <MdOutlineShoppingCart />
 
                 <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-green-900 text-[9px] text-white">
@@ -503,7 +503,7 @@ const Header = () => {
                 <CiSearch />
               </button>
 
-              <Link to="/cart">
+              <Link to="/orders">
                 <MdOutlineShoppingCart />
               </Link>
             </div>
@@ -592,7 +592,7 @@ const Header = () => {
             </Link>
 
             <Link
-              to="/cart"
+              to="/orders"
               onClick={() => setMobileMenu(false)}
               className="flex items-center gap-3 text-gray-600"
             >

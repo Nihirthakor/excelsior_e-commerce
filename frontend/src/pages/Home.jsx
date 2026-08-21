@@ -36,7 +36,7 @@ import { FaHeadphonesSimple } from "react-icons/fa6";
 const Home = () => {
   const [product, setProduct] = useState([]);
 
-  useEffect(() => {
+  useEffect(() => { 
     getProduct();
   }, []);
 
@@ -311,14 +311,18 @@ const Home = () => {
             }}
           >
             {product.map((item) => (
-              <SwiperSlide key={item.id}>
-                <div className="overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:shadow-xl">
-                  <div className="flex items-center justify-center overflow-hidden">
-                    <img
-                      src={`http://localhost:4000${item.image}`}
-                      alt={item.name}
-                      className="h-56 w-full object-cover transition-transform duration-300 hover:scale-110"
-                    />
+              <SwiperSlide key={item.id} className="py-10">
+                <div className="my-10 overflow-hidden rounded-xl bg-white shadow-2xl shadow-gray-800 transition-all duration-300 hover:shadow-2xl">
+                  <div className="relative group">
+                    <div className="flex flex-col items-center justify-center overflow-hidden">
+                      <img
+                        src={`http://localhost:4000${item.image}`}
+                        alt={item.name}
+                        className="h-56 w-fit object-cover transition-transform duration-300 hover:scale-110"
+                      />
+
+                      
+                    </div>
                   </div>
 
                   <div className="p-4">
@@ -494,15 +498,19 @@ const Home = () => {
             breakpoints={{
               0: {
                 slidesPerView: 1,
+                spaceBetween: 10,
               },
               480: {
                 slidesPerView: 2,
+                spaceBetween: 15,
               },
               768: {
                 slidesPerView: 3,
+                spaceBetween: 20,
               },
               1024: {
                 slidesPerView: 4,
+                spaceBetween: 40,
               },
             }}
           >
@@ -512,7 +520,7 @@ const Home = () => {
                   <img
                     src={`http://localhost:4000${item.image}`}
                     alt={item.name}
-                    className="h-56 w-full object-cover transition duration-700 hover:scale-110 sm:h-64 md:h-72 lg:h-80"
+                    className="h-56 p-3 shadow-olive-500 shadow-2xl w-fit object-cover transition duration-700 hover:scale-110 sm:h-64 md:h-72 lg:h-80"
                   />
                 </div>
               </SwiperSlide>

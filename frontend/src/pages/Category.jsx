@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-
+import { CiHeart } from "react-icons/ci";
+import { Link } from "react-router-dom";
 const Category = () => {
   const [product, setProduct] = useState([]);
 
@@ -36,6 +37,7 @@ const Category = () => {
               quantity: cartItem.quantity + 1,
             }
           : cartItem,
+          
       );
     } else {
       updatedCart = [
@@ -62,12 +64,21 @@ const Category = () => {
             key={item.id}
             className="overflow-hidden rounded-lg bg-white shadow"
           >
-            <div className="overflow-hidden">
+            <div className="relative overflow-hidden group">
               <img
                 src={`http://localhost:4000${item.category.image}`}
                 alt={item.name}
                 className="h-64 w-full object-fill"
               />
+
+              <div className="absolute top-4 right-1.5 ">
+                <button
+                  onClick={() => addToCart(item)}
+                  className="text-2xl hidden group-hover:block duration-300"
+                >
+                  <CiHeart />
+                </button>
+              </div>
             </div>
 
             <div className="p-5">

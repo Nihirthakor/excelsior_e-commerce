@@ -33,7 +33,7 @@ const Product = () => {
               <img
                 src={`http://localhost:4000${item.image}`}
                 alt={item.name}
-                className="h-56 w-full object-cover"
+                className="h-56 w-fit object-cover"
               />
             </div>
 
